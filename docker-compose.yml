@@ -1,0 +1,21 @@
+﻿version: '3.4'
+
+services:
+  
+  demo.postgredb:
+    image: timescale/timescaledb:latest-pg14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=florijan
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./data/postgre/data:/var/lib/postgresql/data
+
+  demo.azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - "10000:10000"
+    command: "azurite --loose --skipApiVersionCheck --blobHost 0.0.0.0 --blobPort 10000 --location /workspace --debug /workspace/debug.log"
+    volumes:
+      - ./data/azurite/:/workspace
